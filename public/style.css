@@ -1,23 +1,35 @@
+body {
+  background-color: rgba(15, 23, 42, 1);
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  color: #d0d0d5;
+}
+
 code {
-  background: #d0d0d5;
+  background: rgb(10, 21, 46);
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .form-container {
-  max-width: 95%;
-  align-self: flex-start;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#solve-form {
+  margin-bottom: 200px;
 }
 
 textarea {
-  width: 100%;
-}
-
-#user-stories {
-  font-size: 1.2em;
+  width: 80%;
+  height: 20px;
+  resize: none;
 }
 
 #error-msg {
@@ -30,6 +42,9 @@ textarea {
   display: flex;
   flex-direction: row;
   margin-left: 20px;
+  color: #d0d0d5;
+  width: 100%;
+  font-size: 20px
 }
 
 #sudoku-grid {
@@ -79,10 +94,14 @@ td {
 }
 
 .sudoku-input {
-  border: 1px solid black;
+  border: 1px solid rgb(141, 141, 141);
   width: 2em;
   height: 2em;
   text-align: center;
+}
+
+.sudoku-input:hover {
+  background-color: rgb(53, 60, 76);
 }
 
 .C1, .C2, .C3, .C4, .C5, .C6, .C7, .C8, .C9, .F1, .F2, .F3, .F4, .F5, .F6, .F7, .F8, .F9 {
@@ -92,6 +111,27 @@ td {
 .A3, .B3, .C3, .D3, .E3, .F3, .G3, .H3, .I3, .A6, .B6, .C6, .D6, .E6, .F6, .G6, .H6, .I6 {
   border-right: 3px solid;
 }
+
+#solve-button, #btn-import {
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
+  background-color: #f09a30;
+  border: none;
+}
+
+#btn-import {
+  width: 150px;
+}
+
+#solve-button:hover, #btn-import:hover{
+  background-color: #f1c58f;
+}
+
+.hidden {
+  display: none;
+}
+
 
 @media (min-width: 800px) {
   .container {

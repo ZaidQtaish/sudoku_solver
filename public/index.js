@@ -1,64 +1,88 @@
-const textArea = document.getElementById("text-input");
-const coordInput = document.getElementById("coord");
-const valInput = document.getElementById("val");
-const errorMsg = document.getElementById("error");
+$(document).ready(() => {
+  const $textArea = $("#text-input");
+  const $coordInput = $("#coord");
+  const $valInput = $("#val");
+  const $errorMsg = $("#error");
 
-document.addEventListener("DOMContentLoaded", () => {
-  textArea.value =
-    "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..";
-  fillpuzzle(textArea.value);
-});
+  // Set the initial puzzle
+  const randomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+  $textArea.val(randomPuzzle);
+  fillpuzzle($textArea.val());
 
-textArea.addEventListener("input", () => {
-  fillpuzzle(textArea.value);
-});
+  // Update puzzle on input change
+  $textArea.on("input", () => {
+    fillpuzzle($textArea.val());
+  });
 
-function fillpuzzle(data) {
-  let len = data.length < 81 ? data.length : 81;
-  for (let i = 0; i < len; i++) {
-    let rowLetter = String.fromCharCode('A'.charCodeAt(0) + Math.floor(i / 9));
-    let col = (i % 9) + 1; 
-    if (!data[i] || data[i] === ".") {
-      document.getElementsByClassName(rowLetter + col)[0].innerText = " ";
-      continue;
+  function fillpuzzle(data) {
+    const len = data.length < 81 ? data.length : 81;
+    for (let i = 0; i < len; i++) {
+      const rowLetter = String.fromCharCode("A".charCodeAt(0) + Math.floor(i / 9));
+      const col = (i % 9) + 1;
+      if (!data[i] || data[i] === ".") {
+        $("." + rowLetter + col).text(" ");
+        continue;
+      }
+      $("." + rowLetter + col).text(data[i]);
     }
-    document.getElementsByClassName(rowLetter + col)[0].innerText = data[i];
   }
-  return;
-}
 
-async function getSolved() {
-  const stuff = {"puzzle": textArea.value}
-  const data = await fetch("/api/solve", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(stuff)
-  })
-  const parsed = await data.json();
-  if (parsed.error) {
-    errorMsg.innerHTML = `<code>${JSON.stringify(parsed, null, 2)}</code>`;
-    return
+  // Solve puzzle
+  async function getSolved() {
+    const stuff = { puzzle: $textArea.val() };
+    const data = await fetch("/api/solve", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(stuff)
+    });
+    const parsed = await data.json();
+    if (parsed.error) {
+      $errorMsg.html(`<code>${JSON.stringify(parsed, null, 2)}</code>`);
+      return;
+    }
+    fillpuzzle(parsed.solution);
   }
-  fillpuzzle(parsed.solution)
-}
 
-async function getChecked() {
-  const stuff = {"puzzle": textArea.value, "coordinate": coordInput.value, "value": valInput.value}
+  // Check placement
+  async function getChecked() {
+    const stuff = {
+      puzzle: $textArea.val(),
+      coordinate: $coordInput.val(),
+      value: $valInput.val()
+    };
     const data = await fetch("/api/check", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(stuff)
-  })
-  const parsed = await data.json();
-  errorMsg.innerHTML = `<code>${JSON.stringify(parsed, null, 2)}</code>`;
-}
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(stuff)
+    });
+    const parsed = await data.json();
+    $errorMsg.html(`<code>${JSON.stringify(parsed, null, 2)}</code>`);
+  }
 
+  // Event listeners
+  $("#solve-button").on("click", getSolved);
+  $("#check-button").on("click", getChecked);
 
-document.getElementById("solve-button").addEventListener("click", getSolved)
-document.getElementById("check-button").addEventListener("click", getChecked)
+  $("#btn-import").on("click", () => {
+    $("#text-input").toggleClass("hidden");
+  });
+
+  $(".sudoku-input").on("click", function() {
+    const cellValue = $(this).val(); // Get the value of the clicked input
+    const cellId = $(this).attr("id"); // Get the ID of the clicked input, e.g., "A1", "B3", etc.
+
+    // Update the coord and checker with the cell's info
+    $("#coord").val(cellId); // Show the ID of the clicked cell (coord)
+    $("#checker").val(cellValue); // Show the value of the clicked cell (value)
+  });
+});
+
+const puzzles = [
+  '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.',
+];
