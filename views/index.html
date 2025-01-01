@@ -163,13 +163,13 @@
               <td class="I9 sudoku-input" id="I9" title="I9"></td>
             </tr>
           </tbody>
-          
+
         </table>
       </div>
     </div>
     <div class="form-container">
       <form id="check-form">
-        <p>Coordinate (A1): <input id="coord" class="checker" type="text" name="coordinate"></p>
+        <p>Coordinate: <input id="coord" class="checker" type="text" name="coordinate" placeholder="A1"></p>
         <p>Value (1-9): <input class="checker" type="text" id="val" name="value"></p>
         <input type="button" id="check-button" value="Check Placement">
       </form>
@@ -180,14 +180,15 @@
         <input type="button" value="Solve" id="solve-button" />
         <div id="error-msg"></div>
       </form>
-      <button id="btn-import">Import Puzzle</button>
+      <div>
+        <button id="btn-import">Import Puzzle</button>
+        <button id="btn-reset">Reset Puzzle</button>
+      </div>
     </div>
   </div>
   <script type="module" src="../public/index.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -48,10 +48,18 @@ $(document).ready(() => {
 
   // Check placement
   async function getChecked() {
+    const coord = $coordInput.val();
+    const value = $valInput.val();
+
+    if (!coord || !value) {
+      $errorMsg.html("Please select a coordinate and enter a value");
+      return;
+    }
+
     const stuff = {
       puzzle: $textArea.val(),
-      coordinate: $coordInput.val(),
-      value: $valInput.val()
+      coordinate: coord,
+      value,
     };
     const data = await fetch("/api/check", {
       method: "POST",
@@ -63,6 +71,10 @@ $(document).ready(() => {
     });
     const parsed = await data.json();
     $errorMsg.html(`<code>${JSON.stringify(parsed, null, 2)}</code>`);
+    if (parsed.valid) {
+      // If placement is valid, update the board
+      $("." + coord.toUpperCase()).text(value);
+    }
   }
 
   // Event listeners
@@ -73,14 +85,16 @@ $(document).ready(() => {
     $("#text-input").toggleClass("hidden");
   });
 
-  $(".sudoku-input").on("click", function() {
-    const cellValue = $(this).val(); // Get the value of the clicked input
+  $(".sudoku-input").on("click", function () {
+    const cellValue = $(this).text(); // Get the value of the clicked input
     const cellId = $(this).attr("id"); // Get the ID of the clicked input, e.g., "A1", "B3", etc.
 
     // Update the coord and checker with the cell's info
     $("#coord").val(cellId); // Show the ID of the clicked cell (coord)
     $("#checker").val(cellValue); // Show the value of the clicked cell (value)
   });
+
+  $("#btn-reset").on("click", () => location.reload(true));
 });
 
 const puzzles = [

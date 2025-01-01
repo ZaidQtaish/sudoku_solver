@@ -5,7 +5,8 @@ body {
 }
 
 code {
-  background: rgb(10, 21, 46);
+  background: rgb(5, 12, 29);
+  font-size: 15px;
 }
 
 .container {
@@ -20,6 +21,7 @@ code {
   width: 100%;
   display: flex;
   flex-direction: column;
+  font-size: 20px;
 }
 
 #solve-form {
@@ -28,8 +30,12 @@ code {
 
 textarea {
   width: 80%;
-  height: 20px;
+  height: 19px;
   resize: none;
+  color: #d0d0d5;
+  background-color: #171732;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 #error-msg {
@@ -44,7 +50,7 @@ textarea {
   margin-left: 20px;
   color: #d0d0d5;
   width: 100%;
-  font-size: 20px
+  font-size: 1.5rem;
 }
 
 #sudoku-grid {
@@ -87,6 +93,7 @@ td {
   text-align: center;
   vertical-align: bottom;
   padding-bottom: 0;
+  padding-top: 0;
 }
 
 .xAxisLegend tr td:nth-of-type(3n) {
@@ -112,24 +119,31 @@ td {
   border-right: 3px solid;
 }
 
-#solve-button, #btn-import {
+#solve-button, #btn-import, #check-button, #btn-reset {
   width: 100px;
   height: 30px;
   font-size: 20px;
   background-color: #f09a30;
   border: none;
+  border-radius: 3px;
 }
 
-#btn-import {
+#btn-import, #btn-reset {
   width: 150px;
+  display: inline;
+  margin-right: 30px;
 }
 
-#solve-button:hover, #btn-import:hover{
+#solve-button:hover, #btn-import:hover, #check-button:hover, #btn-reset:hover{
   background-color: #f1c58f;
 }
 
 .hidden {
   display: none;
+}
+
+#check-button {
+  width: 180px;
 }
 
 

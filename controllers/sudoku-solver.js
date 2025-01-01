@@ -76,7 +76,7 @@ class SudokuSolver {
       // Try numbers 1-9 in the empty cell
       for (let num = 1; num <= 9; num++) {
         const value = num.toString();
-
+        
         // Check if the number can be placed in the current row, column, and region
         if (
           this.checkRowPlacement(board.join(""), String.fromCharCode(97 + row), value) &&
