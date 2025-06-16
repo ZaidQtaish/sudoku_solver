@@ -1,7 +1,7 @@
 import { boardToStr } from './helpers.js';
 
 export async function solveSudoku(board) {
-  const response = await fetch('/api/solve', {
+  const response = await fetch('https://sudoku-solver-t3nj.onrender.com/api/solve', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ puzzle: boardToStr(board) }),
@@ -11,7 +11,7 @@ export async function solveSudoku(board) {
 }
 
 export async function checkSudoku(board, coordinate, value) {
-  const response = await fetch('/api/check', {
+  const response = await fetch('https://sudoku-solver-t3nj.onrender.com/api/check', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ puzzle: boardToStr(board), coordinate, value }),
