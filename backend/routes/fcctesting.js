@@ -29,7 +29,7 @@
 
 const cors = require('cors');
 const fs = require('fs');
-const runner = require('../test-runner');
+const runner = require('../test-runner.js');
 
 module.exports = function (app) {
 
